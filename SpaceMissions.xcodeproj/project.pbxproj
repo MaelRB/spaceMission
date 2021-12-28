@@ -8,18 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		8AC8A0E22779FF6E00E7493B /* SpaceMissionsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0E12779FF6E00E7493B /* SpaceMissionsApp.swift */; };
-		8AC8A0E42779FF6E00E7493B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0E32779FF6E00E7493B /* ContentView.swift */; };
 		8AC8A0E62779FF6F00E7493B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AC8A0E52779FF6F00E7493B /* Assets.xcassets */; };
 		8AC8A0E92779FF6F00E7493B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AC8A0E82779FF6F00E7493B /* Preview Assets.xcassets */; };
+		8AC8A0F2277A006900E7493B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 8AC8A0F1277A006800E7493B /* ComposableArchitecture */; };
+		8AC8A0F5277A091800E7493B /* SpaceMissions.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 8AC8A0F4277A091800E7493B /* SpaceMissions.sqlite */; };
+		8AC8A0F8277A09C600E7493B /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0F7277A09C600E7493B /* SidebarNavigation.swift */; };
+		8AC8A0FB277A11A700E7493B /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0FA277A11A700E7493B /* RootFeature.swift */; };
+		8AC8A0FE277A133500E7493B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0FD277A133500E7493B /* MenuView.swift */; };
+		8AC8A100277A134C00E7493B /* NavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A0FF277A134C00E7493B /* NavigationItem.swift */; };
+		8AC8A102277A138100E7493B /* MenuFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A101277A138100E7493B /* MenuFeature.swift */; };
+		8AC8A107277A143000E7493B /* DatabaseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A106277A143000E7493B /* DatabaseServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8AC8A0DE2779FF6E00E7493B /* SpaceMissions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceMissions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AC8A0E12779FF6E00E7493B /* SpaceMissionsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceMissionsApp.swift; sourceTree = "<group>"; };
-		8AC8A0E32779FF6E00E7493B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8AC8A0E52779FF6F00E7493B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8AC8A0E82779FF6F00E7493B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8AC8A0EA2779FF6F00E7493B /* SpaceMissions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceMissions.entitlements; sourceTree = "<group>"; };
+		8AC8A0F4277A091800E7493B /* SpaceMissions.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SpaceMissions.sqlite; sourceTree = "<group>"; };
+		8AC8A0F7277A09C600E7493B /* SidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigation.swift; sourceTree = "<group>"; };
+		8AC8A0FA277A11A700E7493B /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
+		8AC8A0FD277A133500E7493B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		8AC8A0FF277A134C00E7493B /* NavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationItem.swift; sourceTree = "<group>"; };
+		8AC8A101277A138100E7493B /* MenuFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFeature.swift; sourceTree = "<group>"; };
+		8AC8A106277A143000E7493B /* DatabaseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AC8A0F2277A006900E7493B /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,10 +66,12 @@
 		8AC8A0E02779FF6E00E7493B /* SpaceMissions */ = {
 			isa = PBXGroup;
 			children = (
-				8AC8A0E12779FF6E00E7493B /* SpaceMissionsApp.swift */,
-				8AC8A0E32779FF6E00E7493B /* ContentView.swift */,
-				8AC8A0E52779FF6F00E7493B /* Assets.xcassets */,
 				8AC8A0EA2779FF6F00E7493B /* SpaceMissions.entitlements */,
+				8AC8A0F9277A10FB00E7493B /* Root */,
+				8AC8A0F6277A09A800E7493B /* Navigation */,
+				8AC8A0FC277A131D00E7493B /* Menu */,
+				8AC8A105277A141E00E7493B /* Services */,
+				8AC8A0F3277A08D400E7493B /* Ressources */,
 				8AC8A0E72779FF6F00E7493B /* Preview Content */,
 			);
 			path = SpaceMissions;
@@ -67,6 +83,50 @@
 				8AC8A0E82779FF6F00E7493B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8AC8A0F3277A08D400E7493B /* Ressources */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A0E52779FF6F00E7493B /* Assets.xcassets */,
+				8AC8A0F4277A091800E7493B /* SpaceMissions.sqlite */,
+			);
+			path = Ressources;
+			sourceTree = "<group>";
+		};
+		8AC8A0F6277A09A800E7493B /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A0F7277A09C600E7493B /* SidebarNavigation.swift */,
+				8AC8A0FF277A134C00E7493B /* NavigationItem.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		8AC8A0F9277A10FB00E7493B /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A0E12779FF6E00E7493B /* SpaceMissionsApp.swift */,
+				8AC8A0FA277A11A700E7493B /* RootFeature.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		8AC8A0FC277A131D00E7493B /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A0FD277A133500E7493B /* MenuView.swift */,
+				8AC8A101277A138100E7493B /* MenuFeature.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		8AC8A105277A141E00E7493B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A106277A143000E7493B /* DatabaseServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +145,9 @@
 			dependencies = (
 			);
 			name = SpaceMissions;
+			packageProductDependencies = (
+				8AC8A0F1277A006800E7493B /* ComposableArchitecture */,
+			);
 			productName = SpaceMissions;
 			productReference = 8AC8A0DE2779FF6E00E7493B /* SpaceMissions.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +176,9 @@
 				Base,
 			);
 			mainGroup = 8AC8A0D52779FF6E00E7493B;
+			packageReferences = (
+				8AC8A0F0277A006800E7493B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 8AC8A0DF2779FF6E00E7493B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AC8A0F5277A091800E7493B /* SpaceMissions.sqlite in Resources */,
 				8AC8A0E92779FF6F00E7493B /* Preview Assets.xcassets in Resources */,
 				8AC8A0E62779FF6F00E7493B /* Assets.xcassets in Resources */,
 			);
@@ -139,8 +206,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AC8A0E42779FF6E00E7493B /* ContentView.swift in Sources */,
+				8AC8A0F8277A09C600E7493B /* SidebarNavigation.swift in Sources */,
+				8AC8A100277A134C00E7493B /* NavigationItem.swift in Sources */,
+				8AC8A0FE277A133500E7493B /* MenuView.swift in Sources */,
+				8AC8A0FB277A11A700E7493B /* RootFeature.swift in Sources */,
 				8AC8A0E22779FF6E00E7493B /* SpaceMissionsApp.swift in Sources */,
+				8AC8A102277A138100E7493B /* MenuFeature.swift in Sources */,
+				8AC8A107277A143000E7493B /* DatabaseServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +410,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8AC8A0F0277A006800E7493B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8AC8A0F1277A006800E7493B /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8AC8A0F0277A006800E7493B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8AC8A0D62779FF6E00E7493B /* Project object */;
 }

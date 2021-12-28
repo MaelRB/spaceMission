@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MenuView.swift
 //  SpaceMissions
 //
 //  Created by Mael Romanin Bluteau on 27/12/2021.
@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MenuView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Text("Menu!")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MenuView()
     }
 }

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct SpaceMissionsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SidebarNavigation(store: Store(initialState: RootState(), reducer: rootReducer, environment: RootEnvironment()))
         }
     }
 }
