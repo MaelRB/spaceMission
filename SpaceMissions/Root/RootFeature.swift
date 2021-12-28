@@ -19,7 +19,9 @@ enum RootAction {
     case mapsAction
 }
 
-struct RootEnvironment {}
+struct RootEnvironment {
+    let databaseService: DatabaseService
+}
 
 
 // swiftlint:disable trailing_closure
