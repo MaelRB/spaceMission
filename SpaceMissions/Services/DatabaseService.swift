@@ -14,17 +14,48 @@ final class DatabaseService {
     
     init(db: Connection) {
         self.db = db
-        fetchCompany()
+        queryRate()
     }
     
     func fetchCompany() {
         do {
-            for row in try db.prepare("SELECT * FROM Company") {
-                print("companyName: \(row[0])")
+            for row in try db.prepare(SQLQuery.allCompany.query) {
+                for col in row {
+                    print(col)
+                }
+                
+                print("")
             }
         }
         catch {
             print(error)
+        }
+    }
+    
+    func queryRate() {
+        do {
+            for row in try db.prepare(SQLQuery.rateOfSuccessCreateView.query) {
+                for col in row {
+                    print(col)
+                }
+                
+                print("")
+            }
+        }
+        catch {
+            print("View already exists")
+            do {
+                for row in try db.prepare(SQLQuery.rateOfSuccess.query) {
+                    for col in row {
+                        print(col)
+                    }
+                    
+                    print("")
+                }
+            }
+            catch {
+                print(error)
+            }
         }
     }
     

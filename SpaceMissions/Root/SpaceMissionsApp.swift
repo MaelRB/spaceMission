@@ -12,26 +12,13 @@ import SQLite
 @main
 struct SpaceMissionsApp: App {
     
-    private let databaseFilePath = Bundle.main.url(forResource: "SpaceMissions", withExtension: "sqlite")
-    
     var error: Error?
     let database: Connection?
     
-    enum DatabaseError: Error, LocalizedError {
-        case unknownFilePath
-        
-        var errorDescription: String? {
-            switch self {
-                case .unknownFilePath:
-                    return "The database file path is incorrect"
-            }
-        }
-    }
-    
     init() {
         do {
-            guard let databaseFilePath = databaseFilePath else { throw DatabaseError.unknownFilePath }
-            database = try Connection(databaseFilePath.absoluteString)
+            let databaseFilePath = try getDatabaseFilePath()
+            database = try Connection(databaseFilePath)
         }
         catch {
             database = nil

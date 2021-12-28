@@ -23,6 +23,9 @@
 		8AC8A113277AFB8800E7493B /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A112277AFB8800E7493B /* Company.swift */; };
 		8AC8A115277AFBD400E7493B /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A114277AFBD400E7493B /* Launch.swift */; };
 		8AC8A117277AFCBE00E7493B /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A116277AFCBE00E7493B /* Mission.swift */; };
+		8AC8A119277AFD7C00E7493B /* DatabaseService-SQLquery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A118277AFD7C00E7493B /* DatabaseService-SQLquery.swift */; };
+		8AC8A11C277B079E00E7493B /* copyDatabaseIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A11B277B079E00E7493B /* copyDatabaseIfNeeded.swift */; };
+		8AC8A11E277B084000E7493B /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A11D277B084000E7493B /* DatabaseError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		8AC8A112277AFB8800E7493B /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		8AC8A114277AFBD400E7493B /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		8AC8A116277AFCBE00E7493B /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
+		8AC8A118277AFD7C00E7493B /* DatabaseService-SQLquery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseService-SQLquery.swift"; sourceTree = "<group>"; };
+		8AC8A11B277B079E00E7493B /* copyDatabaseIfNeeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = copyDatabaseIfNeeded.swift; sourceTree = "<group>"; };
+		8AC8A11D277B084000E7493B /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,7 @@
 		8AC8A0E02779FF6E00E7493B /* SpaceMissions */ = {
 			isa = PBXGroup;
 			children = (
+				8AC8A11A277B078700E7493B /* Utilities */,
 				8AC8A111277AFB7400E7493B /* Model */,
 				8AC8A0EA2779FF6F00E7493B /* SpaceMissions.entitlements */,
 				8AC8A0F9277A10FB00E7493B /* Root */,
@@ -137,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				8AC8A106277A143000E7493B /* DatabaseService.swift */,
+				8AC8A118277AFD7C00E7493B /* DatabaseService-SQLquery.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -149,6 +157,15 @@
 				8AC8A116277AFCBE00E7493B /* Mission.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8AC8A11A277B078700E7493B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A11B277B079E00E7493B /* copyDatabaseIfNeeded.swift */,
+				8AC8A11D277B084000E7493B /* DatabaseError.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,8 +251,11 @@
 				8AC8A0F8277A09C600E7493B /* SidebarNavigation.swift in Sources */,
 				8AC8A100277A134C00E7493B /* NavigationItem.swift in Sources */,
 				8AC8A113277AFB8800E7493B /* Company.swift in Sources */,
+				8AC8A11C277B079E00E7493B /* copyDatabaseIfNeeded.swift in Sources */,
 				8AC8A0FE277A133500E7493B /* MenuView.swift in Sources */,
 				8AC8A0FB277A11A700E7493B /* RootFeature.swift in Sources */,
+				8AC8A11E277B084000E7493B /* DatabaseError.swift in Sources */,
+				8AC8A119277AFD7C00E7493B /* DatabaseService-SQLquery.swift in Sources */,
 				8AC8A0E22779FF6E00E7493B /* SpaceMissionsApp.swift in Sources */,
 				8AC8A102277A138100E7493B /* MenuFeature.swift in Sources */,
 				8AC8A107277A143000E7493B /* DatabaseService.swift in Sources */,
