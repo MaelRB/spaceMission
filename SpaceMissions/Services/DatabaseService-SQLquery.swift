@@ -18,6 +18,9 @@ extension DatabaseService {
         case numberMissionActive
         case rateOfSuccessCreateView
         case rateOfSuccess
+        case highestAverageCostCreateView
+        case highestAverageCost
+        
         
         var query: String {
             switch self {
@@ -63,6 +66,25 @@ extension DatabaseService {
                                                                 JOIN RateSuccess ON RateSuccess.CompanyName = Launch.CompanyName
                                                                 GROUP BY Launch.CompanyName;
                                                                 """
+                case .highestAverageCostCreateView:     return  """
+                                                                CREATE VIEW AverageCost as
+                                                                SELECT CompanyName, AVG(Cost) as avgCost
+                                                                FROM Launch
+                                                                JOIN Mission ON Mission.MissionID = Launch.MissionID
+                                                                GROUP BY CompanyName;
+
+                                                                SELECT companyName, avgCost
+                                                                FROM AverageCost
+                                                                WHERE avgCost = (SELECT MAX(avgCost)
+                                                                FROM AverageCost)
+                                                                """
+                case .highestAverageCost:               return  """
+                                                                SELECT companyName, avgCost
+                                                                FROM AverageCost
+                                                                WHERE avgCost = (SELECT MAX(avgCost)
+                                                                FROM AverageCost)
+                                                                """
+                
             }
         }
     }

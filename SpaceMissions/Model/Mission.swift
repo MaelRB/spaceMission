@@ -7,16 +7,20 @@
 
 import Foundation
 
-struct Mission: Identifiable {
-    
+struct Mission: Identifiable, Equatable {
+
     let id: Int
     let missionID: Int
     let detail: String
     let statusRocket: String
-    let statusMission: String
     let cost: String
+    let statusMission: String
     
-    init(missionID: Int, detail: String, statusRocket: String, statusMission: String, cost: String) {
+    var mission: String {
+        return String(missionID)
+    }
+    
+    init(missionID: Int, detail: String, statusRocket: String, cost: String, statusMission: String) {
         self.id = missionID
         self.missionID = missionID
         self.detail = detail
@@ -24,4 +28,8 @@ struct Mission: Identifiable {
         self.statusMission = statusMission
         self.cost = cost
     }
+}
+
+extension Mission {
+    static let columnsName = ["missionID", "detail", "statusRocket", "cost", "statusMission"]
 }

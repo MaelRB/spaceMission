@@ -7,13 +7,17 @@
 
 import Foundation
 
-struct Launch: Identifiable {
+struct Launch: Identifiable, Equatable {
     
     let id: String
     let companyName: String
     let location: String
     let date: String
     let missionID: Int
+    
+    var mission: String {
+        return String(missionID)
+    }
     
     init(companyName: String, location: String, date: String, missionID: Int) {
         self.id = companyName
@@ -22,4 +26,8 @@ struct Launch: Identifiable {
         self.date = date
         self.missionID = missionID
     }
+}
+
+extension Launch {
+    static let columnsName = ["companyName", "location", "date", "missionID"]
 }

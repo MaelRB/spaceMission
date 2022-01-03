@@ -26,6 +26,8 @@
 		8AC8A119277AFD7C00E7493B /* DatabaseService-SQLquery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A118277AFD7C00E7493B /* DatabaseService-SQLquery.swift */; };
 		8AC8A11C277B079E00E7493B /* copyDatabaseIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A11B277B079E00E7493B /* copyDatabaseIfNeeded.swift */; };
 		8AC8A11E277B084000E7493B /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A11D277B084000E7493B /* DatabaseError.swift */; };
+		8AC8A1242782D94B00E7493B /* DatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A1232782D94B00E7493B /* DatabaseView.swift */; };
+		8AC8A1262782D95B00E7493B /* DatabaseFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		8AC8A118277AFD7C00E7493B /* DatabaseService-SQLquery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DatabaseService-SQLquery.swift"; sourceTree = "<group>"; };
 		8AC8A11B277B079E00E7493B /* copyDatabaseIfNeeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = copyDatabaseIfNeeded.swift; sourceTree = "<group>"; };
 		8AC8A11D277B084000E7493B /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
+		8AC8A1232782D94B00E7493B /* DatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseView.swift; sourceTree = "<group>"; };
+		8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,7 @@
 				8AC8A0F9277A10FB00E7493B /* Root */,
 				8AC8A0F6277A09A800E7493B /* Navigation */,
 				8AC8A0FC277A131D00E7493B /* Menu */,
+				8AC8A1212782D93800E7493B /* Database */,
 				8AC8A105277A141E00E7493B /* Services */,
 				8AC8A0F3277A08D400E7493B /* Ressources */,
 				8AC8A0E72779FF6F00E7493B /* Preview Content */,
@@ -166,6 +171,15 @@
 				8AC8A11D277B084000E7493B /* DatabaseError.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		8AC8A1212782D93800E7493B /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				8AC8A1232782D94B00E7493B /* DatabaseView.swift */,
+				8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AC8A117277AFCBE00E7493B /* Mission.swift in Sources */,
+				8AC8A1262782D95B00E7493B /* DatabaseFeature.swift in Sources */,
 				8AC8A0F8277A09C600E7493B /* SidebarNavigation.swift in Sources */,
 				8AC8A100277A134C00E7493B /* NavigationItem.swift in Sources */,
 				8AC8A113277AFB8800E7493B /* Company.swift in Sources */,
@@ -260,6 +275,7 @@
 				8AC8A102277A138100E7493B /* MenuFeature.swift in Sources */,
 				8AC8A107277A143000E7493B /* DatabaseService.swift in Sources */,
 				8AC8A115277AFBD400E7493B /* Launch.swift in Sources */,
+				8AC8A1242782D94B00E7493B /* DatabaseView.swift in Sources */,
 				8AC8A110277AF8BB00E7493B /* ErrorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

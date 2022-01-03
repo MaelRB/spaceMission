@@ -9,13 +9,13 @@ import ComposableArchitecture
 
 struct RootState {
     var menuState = MenuState()
-    // Database state
+    var databaseState = DatabaseState()
     // Maps state
 }
 
 enum RootAction {
     case menuAction(MenuAction)
-    case databaseAction
+    case databaseAction(DatabaseAction)
     case mapsAction
 }
 
@@ -33,6 +33,10 @@ let rootReducer = Reducer<
     menuReducer.pullback(
         state: \.menuState,
         action: /RootAction.menuAction,
-        environment: { _ in .init() })
+        environment: { _ in .init() }),
+    databaseReducer.pullback(
+        state: \.databaseState,
+        action: /RootAction.databaseAction,
+        environment: { env in .init(databaseService: env.databaseService) })
     )
 // swiftlint:enable trailing_closure

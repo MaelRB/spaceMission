@@ -28,7 +28,7 @@ struct SidebarNavigation: View {
                     }
                     
                     NavigationLink(tag: NavigationItem.database, selection: $selection) {
-                        Text(NavigationItem.database.rawValue)
+                        DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction))
                             .toolbar {
                                 Text("Info")
                             }
@@ -53,6 +53,7 @@ struct SidebarNavigation: View {
                     .background()
                     .ignoresSafeArea()
             }
+            .frame(minWidth: 800, idealWidth: 1000, minHeight: 400, idealHeight: 600, alignment: .center)
         }
     }
 }

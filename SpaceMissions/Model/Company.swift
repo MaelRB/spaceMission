@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Company: Identifiable {
+struct Company: Identifiable, Equatable {
     
     let id: String
     let companyName: String
@@ -16,4 +16,8 @@ struct Company: Identifiable {
         self.id = name
         self.companyName = name
     }
+}
+
+extension Company {
+    static var columnsName = ["Name"]
 }
