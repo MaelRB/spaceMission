@@ -9,17 +9,33 @@ import Foundation
 
 extension DatabaseService {
     
-    enum SQLQuery {
+    struct HighestAvgResult: Equatable {
+        let name: String
+        let cost: Double
+    }
+    
+    enum SQLQuery: Equatable {
+        
+        // Database
         case allCompany
         case allLaunch
         case allMission
+        
+        // Number
+        case numberCompany
+        case numberMission
         case numberMissionPerCompany
-        case totalCostForCompany(String) // Million $
         case numberMissionActive
-        case rateOfSuccessCreateView
-        case rateOfSuccess
+        
+        // Cost
+        case totalCostForCompany(String) // Million $
+        case totalCost
         case highestAverageCostCreateView
         case highestAverageCost
+        
+        // Other
+        case rateOfSuccessCreateView
+        case rateOfSuccess
         
         
         var query: String {
@@ -27,6 +43,8 @@ extension DatabaseService {
                 case .allCompany:                       return  "SELECT * FROM Company"
                 case .allLaunch:                        return  "SELECT * FROM Launch"
                 case .allMission:                       return  "SELECT * FROM Mission"
+                case .numberCompany:                    return  "SELECT COUNT(*) FROM Company"
+                case .numberMission:                    return  "SELECT COUNT(*) FROM Mission"
                 case .numberMissionPerCompany:          return  """
                                                                 SELECT companyName, COUNT(*) as NumLaunch
                                                                 FROM Launch
@@ -45,6 +63,7 @@ extension DatabaseService {
                                                                 GROUP BY StatusRocket
                                                                 HAVING StatusRocket = 'StatusActive';
                                                                 """
+                case .totalCost:                        return  "SELECT SUM(cost) FROM Mission"
                 case .rateOfSuccessCreateView:          return  """
                                                                 CREATE VIEW RateSuccess as
                                                                 SELECT CompanyName, COUNT(*) as NumSuccess

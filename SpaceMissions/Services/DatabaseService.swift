@@ -83,58 +83,134 @@ final class DatabaseService {
         .eraseToEffect()
     }
     
-    func queryRate() {
-        do {
-            for row in try db.prepare(SQLQuery.rateOfSuccessCreateView.query) {
-                for col in row {
-                    print(col)
-                }
-                
-                print("")
-            }
-        }
-        catch {
-            print("View already exists")
+    func fetchHighestAvgCost() -> Effect<HighestAvgResult, Failure> {
+        return Future<HighestAvgResult, Failure> { [weak self] promise in
+            guard let self = self else { return }
             do {
-                for row in try db.prepare(SQLQuery.rateOfSuccess.query) {
-                    for col in row {
-                        print(col)
-                    }
-                    
-                    print("")
+                for row in try self.db.prepare(SQLQuery.highestAverageCostCreateView.query) {
+                    guard let name = row[0] as? String else { continue }
+                    guard let cost = row[1] as? Double else { continue }
+                    promise(.success(HighestAvgResult(name: name, cost: Double(cost))))
                 }
             }
             catch {
-                print(error)
+                do {
+                    for row in try self.db.prepare(SQLQuery.highestAverageCost.query) {
+                        guard let name = row[0] as? String else { continue }
+                        guard let cost = row[1] as? Double else { continue }
+                        promise(.success(HighestAvgResult(name: name, cost: Double(cost))))
+                    }
+                }
+                catch {
+                    promise(.failure(Failure()))
+                }
             }
         }
+        .eraseToEffect()
     }
     
-    func queryAvgCost() {
-        do {
-            for row in try db.prepare(SQLQuery.highestAverageCostCreateView.query) {
-                for col in row {
-                    print(col)
-                }
-                
-                print("")
-            }
-        }
-        catch {
-            print("View already exists")
+    func fetchNumberMissionActive() -> Effect<Int, Failure> {
+        return Future<Int, Failure> { [weak self] promise in
+            guard let self = self else { return }
             do {
-                for row in try db.prepare(SQLQuery.highestAverageCost.query) {
-                    for col in row {
-                        print(col)
-                    }
-                    print("")
+                for row in try self.db.prepare(SQLQuery.numberMissionActive.query) {
+                    guard let number = row[0] as? Int64 else { continue }
+                    promise(.success(Int(number)))
                 }
             }
             catch {
-                print(error)
+                promise(.failure(Failure()))
             }
         }
+        .eraseToEffect()
     }
     
+    func fetchRateOfSuccess() -> Effect<Double, Failure> {
+        return Future<Double, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.rateOfSuccessCreateView.query) {
+                    guard let number = row[0] as? Double else { continue }
+                    promise(.success(number))
+                }
+            }
+            catch {
+                do {
+                    for row in try self.db.prepare(SQLQuery.rateOfSuccess.query) {
+                        guard let number = row[0] as? Double else { continue }
+                        promise(.success(number))
+                    }
+                }
+                catch {
+                    promise(.failure(Failure()))
+                }
+            }
+        }
+        .eraseToEffect()
+    }
     
+    func fetchNumberCompany() -> Effect<Int, Failure> {
+        return Future<Int, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.numberCompany.query) {
+                    guard let number = row[0] as? Int64 else { continue }
+                    promise(.success(Int(number)))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func fetchNumberMission() -> Effect<Int, Failure> {
+        return Future<Int, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.numberMission.query) {
+                    guard let number = row[0] as? Int64 else { continue }
+                    promise(.success(Int(number)))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func fetchTotalCost() -> Effect<Double, Failure> {
+        return Future<Double, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.totalCost.query) {
+                    guard let number = row[0] as? Double else { continue }
+                    promise(.success(number))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func fetchTotalCostForComapny(name: String) -> Effect<Double, Failure> {
+        return Future<Double, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.totalCostForCompany(name).query) {
+                    guard let number = row[0] as? Double else { continue }
+                    promise(.success(number))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+
 }

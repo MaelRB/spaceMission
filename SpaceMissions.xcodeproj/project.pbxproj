@@ -28,6 +28,7 @@
 		8AC8A11E277B084000E7493B /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A11D277B084000E7493B /* DatabaseError.swift */; };
 		8AC8A1242782D94B00E7493B /* DatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A1232782D94B00E7493B /* DatabaseView.swift */; };
 		8AC8A1262782D95B00E7493B /* DatabaseFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */; };
+		8AC8A12827832F5D00E7493B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12727832F5D00E7493B /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		8AC8A11D277B084000E7493B /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		8AC8A1232782D94B00E7493B /* DatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseView.swift; sourceTree = "<group>"; };
 		8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFeature.swift; sourceTree = "<group>"; };
+		8AC8A12727832F5D00E7493B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				8AC8A0FD277A133500E7493B /* MenuView.swift */,
 				8AC8A101277A138100E7493B /* MenuFeature.swift */,
+				8AC8A12727832F5D00E7493B /* CardView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				8AC8A107277A143000E7493B /* DatabaseService.swift in Sources */,
 				8AC8A115277AFBD400E7493B /* Launch.swift in Sources */,
 				8AC8A1242782D94B00E7493B /* DatabaseView.swift in Sources */,
+				8AC8A12827832F5D00E7493B /* CardView.swift in Sources */,
 				8AC8A110277AF8BB00E7493B /* ErrorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

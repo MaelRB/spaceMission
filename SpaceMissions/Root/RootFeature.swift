@@ -33,7 +33,7 @@ let rootReducer = Reducer<
     menuReducer.pullback(
         state: \.menuState,
         action: /RootAction.menuAction,
-        environment: { _ in .init() }),
+        environment: { env in .init(databaseService: env.databaseService) }),
     databaseReducer.pullback(
         state: \.databaseState,
         action: /RootAction.databaseAction,

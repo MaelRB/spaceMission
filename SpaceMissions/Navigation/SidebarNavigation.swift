@@ -12,14 +12,14 @@ struct SidebarNavigation: View {
     
     let store: Store<RootState, RootAction>
     
-    @State private var selection: NavigationItem?
+    @State private var selection: NavigationItem? = .menu
     
     var body: some View {
         WithViewStore(self.store.stateless) { _ in
             NavigationView {
                 List {
                     NavigationLink(tag: NavigationItem.menu, selection: $selection) {
-                        MenuView()
+                        MenuView(store: store.scope(state: \.menuState, action: RootAction.menuAction))
                             .toolbar {
                                 Text("Info")
                             }
@@ -45,6 +45,7 @@ struct SidebarNavigation: View {
                         Label("Maps", systemImage: NavigationItem.maps.symbol)
                     }
                 }
+                .padding(.top, 10)
                 .navigationTitle("SpaceMissions")
                 
                 Text("Select a category")
