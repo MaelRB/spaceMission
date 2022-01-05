@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 
+// MARK: - State
 struct MenuState: Equatable {
     
     // Company
@@ -24,42 +25,50 @@ struct MenuState: Equatable {
     var totalCostQueryResult = ""
     var highestAvgCost = DatabaseService.HighestAvgResult(name: "", cost: 0)
     var totalCost: Double = 0.0
-    var companyCompletion: [String] = []
-    var companyCostQuery = ""
-    var companyCost: Double = 0.0
+    var costSearchCompletion: [String] = []
+    var costQuery = ""
+    var costForCompany: Double = 0.0
     
     var companyList: [Company] = []
 }
 
+// MARK: - Action
+
 enum MenuAction: Equatable {
-    case onAppearGetNumberCompany
-    case onAppearGetNumberMissionActive
-    case onAppearGetHighestAvgCost
-    case onAppearGetNumberMission
-    case onAppearGetTotalCost
-    case onAppearLoadCompany
     
-    case highestAvgCostLoaded(Result<DatabaseService.HighestAvgResult, DatabaseService.Failure>)
+    case onAppear
+    
+    // Company
+    case companyLoaded(Result<[Company], DatabaseService.Failure>)
     case numberCompanyLoaded(Result<Int, DatabaseService.Failure>)
+    
+    // Mission
     case numberMissionActiveLoaded(Result<Int, DatabaseService.Failure>)
     case numberMissionLoaded(Result<Int, DatabaseService.Failure>)
+    
+    case missionQueryChanged(String)
+    case missionCompletionResponse(Result<[String], Never>)
+    case loadNumberMission(String)
+    case numberMissionForCompanyLoaded(Result<Int, DatabaseService.Failure>)
+    
+    // Cost
+    case highestAvgCostLoaded(Result<DatabaseService.HighestAvgResult, DatabaseService.Failure>)
     case totalCostLoaded(Result<Double, DatabaseService.Failure>)
-    case companyLoaded(Result<[Company], DatabaseService.Failure>)
     
     case companyCostQueryChanged(String)
     case companyCostCompletionResponse(Result<[String], Never>)
     case loadCompanyCost(String)
     case companyCostLoaded(Result<Double, DatabaseService.Failure>)
     
-    case missionQueryChanged(String)
-    case missionCompletionResponse(Result<[String], Never>)
-    case loadNumberMission(String)
-    case numberMissionForCompanyLoaded(Result<Int, DatabaseService.Failure>)
 }
+
+// MARK: - Environment
 
 struct MenuEnvironment {
     let databaseService: DatabaseService
 }
+
+// MARK: - Reducer
 
 let menuReducer = Reducer<
     MenuState,
@@ -67,89 +76,36 @@ let menuReducer = Reducer<
     MenuEnvironment
 > { state, action, environment in
     switch action {
-        case .onAppearLoadCompany:
-            guard state.companyList.isEmpty else { return .none }
-            return environment.databaseService.fetchCompany()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.companyLoaded)
             
-        case .onAppearGetHighestAvgCost:
-            return environment.databaseService.fetchHighestAvgCost()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.highestAvgCostLoaded)
-            
-        case .onAppearGetNumberCompany:
-            return environment.databaseService.fetchNumberCompany()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.numberCompanyLoaded)
-            
-        case .onAppearGetNumberMissionActive:
-            return environment.databaseService.fetchNumberMissionActive()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.numberMissionActiveLoaded)
+        // onAppear
         
-        case .onAppearGetNumberMission:
-            return environment.databaseService.fetchNumberMission()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.numberMissionLoaded)
+        case .onAppear:
+            return .merge(
+                environment.databaseService.fetchCompany()
+                    .catchToEffectOnMain(MenuAction.companyLoaded),
+                
+                environment.databaseService.fetchHighestAvgCost()
+                    .catchToEffectOnMain(MenuAction.highestAvgCostLoaded),
+                
+                environment.databaseService.fetchNumberCompany()
+                    .catchToEffectOnMain(MenuAction.numberCompanyLoaded),
+                
+                environment.databaseService.fetchNumberMissionActive()
+                    .catchToEffectOnMain(MenuAction.numberMissionActiveLoaded),
+                
+                environment.databaseService.fetchNumberMission()
+                    .catchToEffectOnMain(MenuAction.numberMissionLoaded),
+                
+                environment.databaseService.fetchTotalCost()
+                    .catchToEffectOnMain(MenuAction.totalCostLoaded)
+            )
             
-        case .onAppearGetTotalCost:
-            return environment.databaseService.fetchTotalCost()
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.totalCostLoaded)
+        // Company
             
-        case .highestAvgCostLoaded(let result):
-            switch result {
-                case .success(let res):
-                    state.highestAvgCost = res
-                case .failure(let error):
-                    print(error)
-            }
-            return .none
-        
         case .numberCompanyLoaded(let result):
             switch result {
                 case .success(let number):
                     state.numberCompany = number
-                case .failure(let error):
-                    print(error)
-            }
-            return .none
-        
-        case .numberMissionActiveLoaded(let result):
-            switch result {
-                case .success(let number):
-                    state.numberMissionActive = number
-                case .failure(let error):
-                    print(error)
-            }
-            return .none
-        
-        case .numberMissionLoaded(let result):
-            switch result {
-                case .success(let number):
-                    state.numberMission = number
-                case .failure(let error):
-                    print(error)
-            }
-            return .none
-            
-        case .totalCostLoaded(let result):
-            switch result {
-                case .success(let number):
-                    state.totalCost = number
                 case .failure(let error):
                     print(error)
             }
@@ -164,46 +120,26 @@ let menuReducer = Reducer<
             }
             return .none
             
-        case .companyCostQueryChanged(let query):
+        // Mission
             
-            guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
-            
-            return state.companyList.publisher
-                .map { $0.companyName }
-                .compactMap { name in MenuReducerHelper.match(name: name, query: query) }
-                .collect()
-                .map { array in MenuReducerHelper.keepFirst(4, in: array) }
-                .catchToEffect(MenuAction.companyCostCompletionResponse)
-            
-        case .companyCostCompletionResponse(let result):
+        case .numberMissionActiveLoaded(let result):
             switch result {
-                case .success(let completion):
-                    state.companyCompletion = completion
-                case .failure(let error):
-                    state.companyCompletion = []
-            }
-            return .none
-            
-        case .loadCompanyCost(let name):
-            state.companyCostQuery = name
-            let index = state.companyList.firstIndex(of: Company(name: name))
-            guard let safeIndex = index else { return .none }
-            return environment.databaseService.fetchTotalCostForComapny(name: state.companyList[safeIndex].companyName)
-                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-                .receive(on: DispatchQueue.main)
-                .catchToEffect()
-                .map(MenuAction.companyCostLoaded)
-        
-        case .companyCostLoaded(let result):
-            state.companyCompletion.removeAll()
-            switch result {
-                case .success(let cost):
-                    state.companyCost = cost
+                case .success(let number):
+                    state.numberMissionActive = number
                 case .failure(let error):
                     print(error)
             }
             return .none
-        
+            
+        case .numberMissionLoaded(let result):
+            switch result {
+                case .success(let number):
+                    state.numberMission = number
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
+            
         case .missionQueryChanged(let query):
             guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
             
@@ -242,6 +178,66 @@ let menuReducer = Reducer<
                     print(error)
             }
             return .none
+            
+        // Cost
+            
+        case .highestAvgCostLoaded(let result):
+            switch result {
+                case .success(let res):
+                    state.highestAvgCost = res
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
+            
+        case .totalCostLoaded(let result):
+            switch result {
+                case .success(let number):
+                    state.totalCost = number
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
+            
+        case .companyCostQueryChanged(let query):
+            
+            guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
+            
+            return state.companyList.publisher
+                .map { $0.companyName }
+                .compactMap { name in MenuReducerHelper.match(name: name, query: query) }
+                .collect()
+                .map { array in MenuReducerHelper.keepFirst(4, in: array) }
+                .catchToEffect(MenuAction.companyCostCompletionResponse)
+            
+        case .companyCostCompletionResponse(let result):
+            switch result {
+                case .success(let completion):
+                    state.costSearchCompletion = completion
+                case .failure(let error):
+                    state.costSearchCompletion = []
+            }
+            return .none
+            
+        case .loadCompanyCost(let name):
+            state.costQuery = name
+            let index = state.companyList.firstIndex(of: Company(name: name))
+            guard let safeIndex = index else { return .none }
+            return environment.databaseService.fetchTotalCostForComapny(name: state.companyList[safeIndex].companyName)
+                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
+                .receive(on: DispatchQueue.main)
+                .catchToEffect()
+                .map(MenuAction.companyCostLoaded)
+        
+        case .companyCostLoaded(let result):
+            state.costSearchCompletion.removeAll()
+            switch result {
+                case .success(let cost):
+                    state.costForCompany = cost
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
     }
 }
 
@@ -256,4 +252,21 @@ struct MenuReducerHelper {
         return Array(array.prefix(n))
     }
     
+}
+
+
+import Combine
+
+extension Publisher {
+    
+    public func catchToEffectOnMain<T>(
+        _ transform: @escaping (Result<Output, Failure>) -> T
+    ) -> Effect<T, Never> {
+        self
+            .subscribe(on: DispatchQueue.global(qos: .userInteractive))
+            .receive(on: DispatchQueue.main)
+            .map { transform(.success($0)) }
+            .catch { Just(transform(.failure($0))) }
+            .eraseToEffect()
+    }
 }

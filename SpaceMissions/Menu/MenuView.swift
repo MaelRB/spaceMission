@@ -14,7 +14,7 @@ struct MenuView: View {
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 20) {
                 HStack(alignment: .top, spacing: 20) {
                     CardView(title: "Mission") {
                         Text("Number companies: \(viewStore.numberCompany)")
@@ -51,12 +51,12 @@ struct MenuView: View {
                         Text("Highest average cost: \(viewStore.highestAvgCost.name) | \(viewStore.highestAvgCost.cost, specifier: "%.2f") M$")
                         Text("Total cost: \(viewStore.totalCost, specifier: "%.2f") M$")
                         
-                        SearchField(placeholder: "NASA, ESA, SpaceX...", query: viewStore.binding(get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged), completionResult: viewStore.companyCompletion) { query in
+                        SearchField(placeholder: "NASA, ESA, SpaceX...", query: viewStore.binding(get: \.costQuery, send: MenuAction.companyCostQueryChanged), completionResult: viewStore.costSearchCompletion) { query in
                             viewStore.send(.loadCompanyCost(query))
                         } completionAction: { completion in
                             viewStore.send(.loadCompanyCost(completion))
                         } content: {
-                            Text("Total cost: \(viewStore.companyCost, specifier: "%.2f") M$")
+                            Text("Total cost: \(viewStore.costForCompany, specifier: "%.2f") M$")
                         }
                     }
                     
@@ -64,8 +64,8 @@ struct MenuView: View {
                     
                 }
         
-                CardView(title: "Test") {
-                    Text("Test")
+                CardView(title: "Company") {
+                    Text("Number companies: \(viewStore.numberCompany)")
                 }
                 
                 Spacer()
@@ -73,12 +73,7 @@ struct MenuView: View {
             .padding(20)
             .navigationTitle("Dashboard")
             .onAppear {
-                viewStore.send(.onAppearGetHighestAvgCost)
-                viewStore.send(.onAppearGetTotalCost)
-                viewStore.send(.onAppearGetNumberMissionActive)
-                viewStore.send(.onAppearGetNumberCompany)
-                viewStore.send(.onAppearGetNumberMission)
-                viewStore.send(.onAppearLoadCompany)
+                viewStore.send(.onAppear)
             }
         }
     }
