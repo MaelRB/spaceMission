@@ -23,6 +23,7 @@ extension DatabaseService {
         case addCompany(String)
         case addLaunch(Launch)
         case addMission(Mission)
+        case deleteCompany(String)
         
         // Company
         case numberCompany
@@ -59,6 +60,7 @@ extension DatabaseService {
                                                                     INSERT INTO Mission (missionID, detail, statusRocket, cost, statusMission)
                                                                     VALUES ('\(mission.missionID)', '\(mission.detail)', '\(mission.statusRocket)', '\(mission.cost)', '\(mission.statusMission)');
                                                                     """
+                case .deleteCompany(let name):              return  "DELETE FROM Company WHERE companyName = '\(name)';"
                 case .numberCompany:                        return  "SELECT COUNT(*) FROM Company"
                 case .numberMission:                        return  "SELECT COUNT(*) FROM Mission"
                 case .numberMissionForCompany(let name):    return  """

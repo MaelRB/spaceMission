@@ -47,7 +47,9 @@ struct AddItemView: View {
                 .padding(.bottom, 10)
             
             Button {
-                add()
+                withAnimation {
+                    add()
+                }
             } label: {
                 Text("Add")
                     .padding(3)

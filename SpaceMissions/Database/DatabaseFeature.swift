@@ -18,6 +18,10 @@ enum DatabaseAction: Equatable {
     case onAppearLoadLaunch
     case onAppearLoadMission
     
+    case loadCompany
+    case loadLaunch
+    case loadMission
+    
     case companyLoaded(Result<[Company], DatabaseService.Failure>)
     case launchLoaded(Result<[Launch], DatabaseService.Failure>)
     case missionLoaded(Result<[Mission], DatabaseService.Failure>)
@@ -30,6 +34,9 @@ enum DatabaseAction: Equatable {
     
     case addMission(Mission)
     case addMissionResponse(Result<Bool, DatabaseService.Failure>)
+    
+    case deleteCompany(String)
+    case deleteResponse(Result<Bool, DatabaseService.Failure>)
 }
 
 struct DatabaseEnvironment {
@@ -56,6 +63,26 @@ let databaseReducer = Reducer<
             guard state.missionList.isEmpty else { return .none }
             return environment.databaseService.fetchMission()
                 .catchToEffectOnMain(DatabaseAction.missionLoaded)
+            
+        case .loadCompany:
+            return environment.databaseService.fetchCompany()
+                .catchToEffectOnMain(DatabaseAction.companyLoaded)
+            
+        case .loadLaunch:
+            return environment.databaseService.fetchLaunch()
+                .catchToEffectOnMain(DatabaseAction.launchLoaded)
+            
+        case .loadMission:
+            return environment.databaseService.fetchMission()
+                .catchToEffectOnMain(DatabaseAction.missionLoaded)
+            
+        case .deleteCompany(let name):
+            state.companyList.removeAll { $0.id == name }
+            return environment.databaseService.deleteCompany(with: name)
+                .catchToEffectOnMain(DatabaseAction.deleteResponse)
+        
+        case .deleteResponse(_):
+            return .none
             
         case .companyLoaded(let result):
             switch result {
@@ -85,6 +112,7 @@ let databaseReducer = Reducer<
             return .none
         
         case .addCompany(let name):
+            state.companyList.append(Company(name: name))
             return environment.databaseService.addCompany(with: name)
                 .catchToEffectOnMain(DatabaseAction.addCompanyResponse)
         
@@ -98,6 +126,7 @@ let databaseReducer = Reducer<
             return .none
             
         case .addLaunch(let launch):
+            state.launchList.append(launch)
             return environment.databaseService.addLaunch(with: launch)
                 .catchToEffectOnMain(DatabaseAction.addLaunchResponse)
             
@@ -111,6 +140,7 @@ let databaseReducer = Reducer<
             return .none
             
         case .addMission(let mission):
+            state.missionList.append(mission)
             return environment.databaseService.addMission(with: mission)
                 .catchToEffectOnMain(DatabaseAction.addMissionResponse)
             

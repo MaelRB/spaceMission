@@ -278,5 +278,20 @@ final class DatabaseService {
         }
         .eraseToEffect()
     }
+    
+    func deleteCompany(with name: String) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.deleteCompany(name).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
 
 }
