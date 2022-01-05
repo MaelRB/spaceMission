@@ -10,7 +10,9 @@ import Foundation
 enum NavigationItem: String {
     case menu = "Menu"
     case database = "Database"
-    case maps = "Maps"
+    case company = "Company"
+    case launch = "Launch"
+    case mission = "Mission"
     
     var symbol: String {
         switch self {
@@ -18,8 +20,7 @@ enum NavigationItem: String {
                 return "list.bullet"
             case .database:
                 return "opticaldiscdrive"
-            case .maps:
-                return "map"
+            default: return "opticaldiscdrive"
         }
     }
 }

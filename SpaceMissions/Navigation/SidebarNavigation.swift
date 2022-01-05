@@ -27,22 +27,35 @@ struct SidebarNavigation: View {
                         Label("Menu", systemImage: NavigationItem.menu.symbol)
                     }
                     
-                    NavigationLink(tag: NavigationItem.database, selection: $selection) {
-                        DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction))
-                            .toolbar {
-                                Text("Info")
-                            }
+                    DisclosureGroup {
+                        NavigationLink(tag: NavigationItem.company, selection: $selection) {
+                            DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Company)
+                                .toolbar {
+                                    Text("Info")
+                                }
+                        } label: {
+                            Text(NavigationItem.company.rawValue)
+                        }
+                        
+                        NavigationLink(tag: NavigationItem.launch, selection: $selection) {
+                            DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Launch)
+                                .toolbar {
+                                    Text("Info")
+                                }
+                        } label: {
+                            Text(NavigationItem.launch.rawValue)
+                        }
+                        
+                        NavigationLink(tag: NavigationItem.mission, selection: $selection) {
+                            DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Mission)
+                                .toolbar {
+                                    Text("Info")
+                                }
+                        } label: {
+                            Text(NavigationItem.mission.rawValue)
+                        }
                     } label: {
-                        Label("Database", systemImage: NavigationItem.database.symbol)
-                    }
-                    
-                    NavigationLink(tag: NavigationItem.maps, selection: $selection) {
-                        Text(NavigationItem.maps.rawValue)
-                            .toolbar {
-                                Text("Info")
-                            }
-                    } label: {
-                        Label("Maps", systemImage: NavigationItem.maps.symbol)
+                        Label(NavigationItem.database.rawValue, systemImage: NavigationItem.database.symbol)
                     }
                 }
                 .padding(.top, 10)
