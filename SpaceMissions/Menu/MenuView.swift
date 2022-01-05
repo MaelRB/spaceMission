@@ -42,7 +42,7 @@ struct MenuView: View {
                         Text("Total cost: \(viewStore.totalCost, specifier: "%.2f") M$")
                         VStack(alignment: .leading, spacing: 8) {
                             TextField(
-                                "Company cost",
+                                "NASA, ESA, SpaceX...",
                                 text: viewStore.binding(
                                     get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged
                                 )
@@ -56,7 +56,7 @@ struct MenuView: View {
                             }
                             
                             if !viewStore.companyCompletion.isEmpty {
-                                List(viewStore.companyCompletion, id: \.self) { completion in
+                                ForEach(viewStore.companyCompletion, id: \.self) { completion in
                                     Button {
                                         viewStore.send(.loadCompanyCost(completion))
                                     } label: {
@@ -64,8 +64,6 @@ struct MenuView: View {
                                     }
                                     .buttonStyle(.borderless)
                                 }
-                                .offset(x: 0, y: -10)
-                                .frame(height: 100)
                             } else {
                                 Text("Total cost \(viewStore.companyCost, specifier: "%.2f") M$")
                             }
