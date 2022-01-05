@@ -23,7 +23,7 @@ extension DatabaseService {
         
         // Company
         case numberCompany
-        case rateOfSuccessCreateView(String)
+        case rateOfSuccessCreateView
         case rateOfSuccess(String)
         
         // Number
@@ -63,20 +63,13 @@ extension DatabaseService {
                                                                     HAVING StatusRocket = 'StatusActive';
                                                                     """
                 case .totalCost:                            return  "SELECT SUM(cost) FROM Mission"
-                case .rateOfSuccessCreateView(let name):    return  """
+                case .rateOfSuccessCreateView:    return  """
                                                                     CREATE VIEW RateSuccess as
                                                                     SELECT CompanyName, COUNT(*) as NumSuccess
                                                                     FROM Launch
                                                                     JOIN Mission ON Mission.MissionID = Launch.MissionID
                                                                     WHERE StatusMission = 'Success'
                                                                     GROUP BY CompanyName;
-                                                                    
-                                                                    SELECT CAST(NumSuccess as REAL) / COUNT(*) as RateSuccess
-                                                                    FROM Mission
-                                                                    JOIN Launch ON Launch.MissionID = Mission.MissionID
-                                                                    JOIN RateSuccess ON RateSuccess.CompanyName = Launch.CompanyName
-                                                                    WHERE Launch.companyName = '\(name)'
-                                                                    GROUP BY Launch.CompanyName;
                                                                     """
                 case .rateOfSuccess(let name):              return  """
                                                                     SELECT CAST(NumSuccess as REAL) / COUNT(*) as RateSuccess
@@ -92,11 +85,6 @@ extension DatabaseService {
                                                                     FROM Launch
                                                                     JOIN Mission ON Mission.MissionID = Launch.MissionID
                                                                     GROUP BY CompanyName;
-
-                                                                    SELECT companyName, avgCost
-                                                                    FROM AverageCost
-                                                                    WHERE avgCost = (SELECT MAX(avgCost)
-                                                                    FROM AverageCost)
                                                                     """
                 case .highestAverageCost:                   return  """
                                                                     SELECT companyName, avgCost

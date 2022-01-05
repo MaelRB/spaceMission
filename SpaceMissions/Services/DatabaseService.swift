@@ -14,6 +14,8 @@ final class DatabaseService {
     
     private let db: Connection
     
+    private let defaults = UserDefaults.standard
+    
     struct Failure: Error, Equatable {}
     
     init(db: Connection) {
@@ -86,24 +88,25 @@ final class DatabaseService {
     func fetchHighestAvgCost() -> Effect<HighestAvgResult, Failure> {
         return Future<HighestAvgResult, Failure> { [weak self] promise in
             guard let self = self else { return }
+            
             do {
-                for row in try self.db.prepare(SQLQuery.highestAverageCostCreateView.query) {
+                
+                // Table view not created
+                if self.defaults.bool(forKey: "isAverageViewCreated") == false {
+                    self.defaults.set(true, forKey: "isAverageViewCreated")
+                    do {
+                        for _ in try self.db.prepare(SQLQuery.highestAverageCostCreateView.query) {}
+                    } catch {}
+                }
+                
+                for row in try self.db.prepare(SQLQuery.highestAverageCost.query) {
                     guard let name = row[0] as? String else { continue }
                     guard let cost = row[1] as? Double else { continue }
                     promise(.success(HighestAvgResult(name: name, cost: Double(cost))))
                 }
             }
             catch {
-                do {
-                    for row in try self.db.prepare(SQLQuery.highestAverageCost.query) {
-                        guard let name = row[0] as? String else { continue }
-                        guard let cost = row[1] as? Double else { continue }
-                        promise(.success(HighestAvgResult(name: name, cost: Double(cost))))
-                    }
-                }
-                catch {
-                    promise(.failure(Failure()))
-                }
+                promise(.failure(Failure()))
             }
         }
         .eraseToEffect()
@@ -128,22 +131,24 @@ final class DatabaseService {
     func fetchRateOfSuccess(for name: String) -> Effect<Double, Failure> {
         return Future<Double, Failure> { [weak self] promise in
             guard let self = self else { return }
+            
             do {
-                for row in try self.db.prepare(SQLQuery.rateOfSuccessCreateView(name).query) {
+                
+                // Table view not created
+                if self.defaults.bool(forKey: "isSumViewCreated") == false {
+                    self.defaults.set(true, forKey: "isSumViewCreated")
+                    do {
+                        for _ in try self.db.prepare(SQLQuery.rateOfSuccessCreateView.query) {}
+                    } catch {}
+                }
+                
+                for row in try self.db.prepare(SQLQuery.rateOfSuccess(name).query) {
                     guard let number = row[0] as? Double else { continue }
                     promise(.success(number))
                 }
             }
             catch {
-                do {
-                    for row in try self.db.prepare(SQLQuery.rateOfSuccess(name).query) {
-                        guard let number = row[0] as? Double else { continue }
-                        promise(.success(number))
-                    }
-                }
-                catch {
-                    promise(.failure(Failure()))
-                }
+                promise(.failure(Failure()))
             }
         }
         .eraseToEffect()
