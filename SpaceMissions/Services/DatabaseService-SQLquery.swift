@@ -20,6 +20,9 @@ extension DatabaseService {
         case allCompany
         case allLaunch
         case allMission
+        case addCompany(String)
+        case addLaunch(Launch)
+        case addMission(Mission)
         
         // Company
         case numberCompany
@@ -43,6 +46,19 @@ extension DatabaseService {
                 case .allCompany:                           return  "SELECT * FROM Company"
                 case .allLaunch:                            return  "SELECT * FROM Launch"
                 case .allMission:                           return  "SELECT * FROM Mission"
+                case .addCompany(let name):                 return  """
+                                                                    INSERT INTO Company (companyName)
+                                                                    VALUES ('\(name)');
+                                                                    """
+                case .addLaunch(let launch):                return  """
+                                                                    INSERT INTO Launch (companyName, location, date, MissionID)
+                                                                    VALUES ('\(launch.companyName)', '\(launch.location)',
+                                                                    '\(launch.date)', '\(launch.missionID)');
+                                                                    """
+                case .addMission(let mission):              return  """
+                                                                    INSERT INTO Mission (missionID, detail, statusRocket, cost, statusMission)
+                                                                    VALUES ('\(mission.missionID)', '\(mission.detail)', '\(mission.statusRocket)', '\(mission.cost)', '\(mission.statusMission)');
+                                                                    """
                 case .numberCompany:                        return  "SELECT COUNT(*) FROM Company"
                 case .numberMission:                        return  "SELECT COUNT(*) FROM Mission"
                 case .numberMissionForCompany(let name):    return  """

@@ -33,6 +33,7 @@
 		8AC8A12C2785863800E7493B /* ToolbarInfoModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12B2785863800E7493B /* ToolbarInfoModifier.swift */; };
 		8AC8A12E2785946F00E7493B /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12D2785946F00E7493B /* SearchField.swift */; };
 		8AC8A1302785A7EC00E7493B /* EffectPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12F2785A7EC00E7493B /* EffectPublisher.swift */; };
+		8AC8A1342785D18500E7493B /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A1332785D18500E7493B /* AddItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		8AC8A12B2785863800E7493B /* ToolbarInfoModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarInfoModifier.swift; sourceTree = "<group>"; };
 		8AC8A12D2785946F00E7493B /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		8AC8A12F2785A7EC00E7493B /* EffectPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectPublisher.swift; sourceTree = "<group>"; };
+		8AC8A1332785D18500E7493B /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 			children = (
 				8AC8A1232782D94B00E7493B /* DatabaseView.swift */,
 				8AC8A1252782D95B00E7493B /* DatabaseFeature.swift */,
+				8AC8A1332785D18500E7493B /* AddItemView.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				8AC8A1242782D94B00E7493B /* DatabaseView.swift in Sources */,
 				8AC8A12827832F5D00E7493B /* CardView.swift in Sources */,
 				8AC8A12A278583B000E7493B /* InfoView.swift in Sources */,
+				8AC8A1342785D18500E7493B /* AddItemView.swift in Sources */,
 				8AC8A12C2785863800E7493B /* ToolbarInfoModifier.swift in Sources */,
 				8AC8A110277AF8BB00E7493B /* ErrorView.swift in Sources */,
 			);

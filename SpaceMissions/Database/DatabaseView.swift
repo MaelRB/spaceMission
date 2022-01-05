@@ -13,6 +13,8 @@ struct DatabaseView: View {
     let store: Store<DatabaseState, DatabaseAction>
     var databaseTable: DatabaseTable
     
+    @State private var showAddItemView = false
+    
     var body: some View {
         WithViewStore(self.store) { viewStore in
             databaseTable.tableView(store: viewStore)
@@ -21,6 +23,18 @@ struct DatabaseView: View {
                     viewStore.send(databaseTable.loadTableAction)
                 }
                 .navigationTitle(databaseTable.rawValue)
+                .sheet(isPresented: $showAddItemView, onDismiss: nil) {
+                    AddItemView(viewStore: viewStore, table: databaseTable)
+                }
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    showAddItemView.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
     }
 }

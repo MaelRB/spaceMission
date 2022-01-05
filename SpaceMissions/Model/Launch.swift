@@ -10,10 +10,10 @@ import Foundation
 struct Launch: Identifiable, Equatable {
     
     let id: String
-    let companyName: String
-    let location: String
-    let date: String
-    let missionID: Int
+    var companyName: String
+    var location: String
+    var date: String
+    var missionID: Int
     
     var mission: String {
         return String(missionID)

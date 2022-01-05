@@ -233,5 +233,50 @@ final class DatabaseService {
         }
         .eraseToEffect()
     }
+    
+    func addCompany(with name: String) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.addCompany(name).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func addLaunch(with launch: Launch) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.addLaunch(launch).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func addMission(with mission: Mission) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.addMission(mission).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
 
 }

@@ -10,11 +10,11 @@ import Foundation
 struct Mission: Identifiable, Equatable {
 
     let id: Int
-    let missionID: Int
-    let detail: String
-    let statusRocket: String
-    let cost: String
-    let statusMission: String
+    var missionID: Int
+    var detail: String
+    var statusRocket: String
+    var cost: String
+    var statusMission: String
     
     var mission: String {
         return String(missionID)
