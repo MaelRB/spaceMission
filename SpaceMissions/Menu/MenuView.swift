@@ -80,6 +80,7 @@ struct MenuView: View {
                 
                 Spacer()
             }
+            .navigationTitle("Dashboard")
             .onAppear {
                 viewStore.send(.onAppearGetHighestAvgCost)
                 viewStore.send(.onAppearGetTotalCost)

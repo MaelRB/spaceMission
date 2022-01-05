@@ -24,7 +24,7 @@ struct SidebarNavigation: View {
                         MenuView(store: store.scope(state: \.menuState, action: RootAction.menuAction))
                             .toolbarInfo(show: $showInfoView)
                     } label: {
-                        Label("Menu", systemImage: NavigationItem.menu.symbol)
+                        Label(NavigationItem.menu.rawValue, systemImage: NavigationItem.menu.symbol)
                     }
                     
                     DisclosureGroup {

@@ -8,7 +8,7 @@
 import Foundation
 
 enum NavigationItem: String {
-    case menu = "Menu"
+    case menu = "Dashboard"
     case database = "Database"
     case company = "Company"
     case launch = "Launch"
