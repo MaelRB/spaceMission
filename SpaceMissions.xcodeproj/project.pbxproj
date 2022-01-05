@@ -31,6 +31,7 @@
 		8AC8A12827832F5D00E7493B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12727832F5D00E7493B /* CardView.swift */; };
 		8AC8A12A278583B000E7493B /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A129278583B000E7493B /* InfoView.swift */; };
 		8AC8A12C2785863800E7493B /* ToolbarInfoModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12B2785863800E7493B /* ToolbarInfoModifier.swift */; };
+		8AC8A12E2785946F00E7493B /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8A12D2785946F00E7493B /* SearchField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		8AC8A12727832F5D00E7493B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8AC8A129278583B000E7493B /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		8AC8A12B2785863800E7493B /* ToolbarInfoModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarInfoModifier.swift; sourceTree = "<group>"; };
+		8AC8A12D2785946F00E7493B /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				8AC8A11D277B084000E7493B /* DatabaseError.swift */,
 				8AC8A129278583B000E7493B /* InfoView.swift */,
 				8AC8A12B2785863800E7493B /* ToolbarInfoModifier.swift */,
+				8AC8A12D2785946F00E7493B /* SearchField.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				8AC8A100277A134C00E7493B /* NavigationItem.swift in Sources */,
 				8AC8A113277AFB8800E7493B /* Company.swift in Sources */,
 				8AC8A11C277B079E00E7493B /* copyDatabaseIfNeeded.swift in Sources */,
+				8AC8A12E2785946F00E7493B /* SearchField.swift in Sources */,
 				8AC8A0FE277A133500E7493B /* MenuView.swift in Sources */,
 				8AC8A0FB277A11A700E7493B /* RootFeature.swift in Sources */,
 				8AC8A11E277B084000E7493B /* DatabaseError.swift in Sources */,

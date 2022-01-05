@@ -14,9 +14,9 @@ struct MenuView: View {
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
-            VStack {
+            VStack(alignment: .leading) {
                 HStack(alignment: .top, spacing: 20) {
-                    CardView(title: "Number") {
+                    CardView(title: "Mission") {
                         Text("Number companies: \(viewStore.numberCompany)")
                         Text("Number missions: \(viewStore.numberMission)")
                         
@@ -40,41 +40,24 @@ struct MenuView: View {
                     CardView(title: "Cost") {
                         Text("Highest average cost: \(viewStore.highestAvgCost.name) | \(viewStore.highestAvgCost.cost, specifier: "%.2f") M$")
                         Text("Total cost: \(viewStore.totalCost, specifier: "%.2f") M$")
-                        VStack(alignment: .leading, spacing: 8) {
-                            TextField(
-                                "NASA, ESA, SpaceX...",
-                                text: viewStore.binding(
-                                    get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged
-                                )
-                            )
-                            .font(.body.bold())
-                            .textFieldStyle(.plain)
-                            .disableAutocorrection(true)
-                            .onSubmit {
-                                print(viewStore.companyCostQuery)
-                                viewStore.send(.loadCompanyCost(viewStore.companyCostQuery))
-                            }
-                            
-                            if !viewStore.companyCompletion.isEmpty {
-                                ForEach(viewStore.companyCompletion, id: \.self) { completion in
-                                    Button {
-                                        viewStore.send(.loadCompanyCost(completion))
-                                    } label: {
-                                        Text(completion)
-                                    }
-                                    .buttonStyle(.borderless)
-                                }
-                            } else {
-                                Text("Total cost \(viewStore.companyCost, specifier: "%.2f") M$")
-                            }
-                            
+                        
+                        SearchField(placeholder: "NASA, ESA, SpaceX", query: viewStore.binding(get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged), completionResult: viewStore.companyCompletion) { query in
+                            viewStore.send(.loadCompanyCost(query))
+                        } completionAction: { completion in
+                            viewStore.send(.loadCompanyCost(completion))
+                        } content: {
+                            Text("Total cost \(viewStore.companyCost, specifier: "%.2f") M$")
                         }
-                        .padding(.vertical, 10)
                     }
                     
                     Spacer()
+                    
                 }
                 .padding(20)
+                
+                CardView(title: "Test") {
+                    Text("Test")
+                }
                 
                 Spacer()
             }

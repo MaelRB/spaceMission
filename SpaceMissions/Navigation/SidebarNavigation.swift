@@ -27,7 +27,7 @@ struct SidebarNavigation: View {
                         Label(NavigationItem.menu.rawValue, systemImage: NavigationItem.menu.symbol)
                     }
                     
-                    DisclosureGroup {
+                    Section {
                         NavigationLink(tag: NavigationItem.company, selection: $selection) {
                             DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Company)
                                 .toolbarInfo(show: $showInfoView)
@@ -48,11 +48,14 @@ struct SidebarNavigation: View {
                         } label: {
                             Text(NavigationItem.mission.rawValue)
                         }
-                    } label: {
-                        Label(NavigationItem.database.rawValue, systemImage: NavigationItem.database.symbol)
+                    } header: {
+                        Text(NavigationItem.database.rawValue)
                     }
+
+                    
                 }
                 .listStyle(.sidebar)
+                .frame(minWidth: 100)
                 .padding(.top, 10)
                 .navigationTitle("SpaceMissions")
                 .toolbar {
@@ -75,7 +78,7 @@ struct SidebarNavigation: View {
                     .background()
                     .ignoresSafeArea()
             }
-            .frame(minWidth: 800, idealWidth: 1000, minHeight: 400, idealHeight: 600, alignment: .center)
+            .frame(minWidth: 850, idealWidth: 950, minHeight: 400, idealHeight: 600, alignment: .center)
         }
     }
 
