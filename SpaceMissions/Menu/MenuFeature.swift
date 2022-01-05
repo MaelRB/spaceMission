@@ -8,20 +8,27 @@
 import ComposableArchitecture
 
 struct MenuState: Equatable {
+    
+    // Company
     var numberCompany: Int = 0
+    var rateOfSuccess: Double = 0.0
+    
+    // Mission
     var numberMission: Int = 0
     var numberMissionActive: Int = 0
+    var numberMissionForCompany: Int = 0
+    var missionSearchCompletion: [String] = []
+    var missionSearchQuery = ""
     
+    // Cost
     var totalCostQueryResult = ""
     var highestAvgCost = DatabaseService.HighestAvgResult(name: "", cost: 0)
     var totalCost: Double = 0.0
-    
-    var rateOfSuccess: Double = 0.0
-    
-    var companyList: [Company] = []
     var companyCompletion: [String] = []
     var companyCostQuery = ""
     var companyCost: Double = 0.0
+    
+    var companyList: [Company] = []
 }
 
 enum MenuAction: Equatable {
@@ -43,6 +50,11 @@ enum MenuAction: Equatable {
     case companyCostCompletionResponse(Result<[String], Never>)
     case loadCompanyCost(String)
     case companyCostLoaded(Result<Double, DatabaseService.Failure>)
+    
+    case missionQueryChanged(String)
+    case missionCompletionResponse(Result<[String], Never>)
+    case loadNumberMission(String)
+    case numberMissionForCompanyLoaded(Result<Int, DatabaseService.Failure>)
 }
 
 struct MenuEnvironment {
@@ -156,20 +168,11 @@ let menuReducer = Reducer<
             
             guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
             
-            func match(name: String, query: String) -> String? {
-                let prefix = name.prefix(query.count)
-                return  prefix.lowercased() == query.lowercased() ? name : nil
-            }
-            
-            func keepFirst(_ n: Int, in array: [String]) -> [String] {
-                return Array(array.prefix(n))
-            }
-            
             return state.companyList.publisher
                 .map { $0.companyName }
-                .compactMap { name in match(name: name, query: query) }
+                .compactMap { name in MenuReducerHelper.match(name: name, query: query) }
                 .collect()
-                .map { array in keepFirst(4, in: array) }
+                .map { array in MenuReducerHelper.keepFirst(4, in: array) }
                 .catchToEffect(MenuAction.companyCostCompletionResponse)
             
         case .companyCostCompletionResponse(let result):
@@ -200,5 +203,57 @@ let menuReducer = Reducer<
                     print(error)
             }
             return .none
+        
+        case .missionQueryChanged(let query):
+            guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
+            
+            return state.companyList.publisher
+                .map { $0.companyName }
+                .compactMap { name in MenuReducerHelper.match(name: name, query: query) }
+                .collect()
+                .map { array in MenuReducerHelper.keepFirst(4, in: array) }
+                .catchToEffect(MenuAction.missionCompletionResponse)
+            
+        case .missionCompletionResponse(let result):
+            switch result {
+                case .success(let completion):
+                    state.missionSearchCompletion = completion
+                case .failure(let error):
+                    state.missionSearchCompletion = []
+            }
+            return .none
+            
+        case .loadNumberMission(let name):
+            state.missionSearchQuery = name
+            let index = state.companyList.firstIndex(of: Company(name: name))
+            guard let safeIndex = index else { return .none }
+            return environment.databaseService.fetchNumberMissionForComapny(name: state.companyList[safeIndex].companyName)
+                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
+                .receive(on: DispatchQueue.main)
+                .catchToEffect()
+                .map(MenuAction.numberMissionForCompanyLoaded)
+            
+        case .numberMissionForCompanyLoaded(let result):
+            state.missionSearchCompletion.removeAll()
+            switch result {
+                case .success(let number):
+                    state.numberMissionForCompany = number
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
     }
+}
+
+struct MenuReducerHelper {
+    
+    static func match(name: String, query: String) -> String? {
+        let prefix = name.prefix(query.count)
+        return  prefix.lowercased() == query.lowercased() ? name : nil
+    }
+    
+    static func keepFirst(_ n: Int, in array: [String]) -> [String] {
+        return Array(array.prefix(n))
+    }
+    
 }

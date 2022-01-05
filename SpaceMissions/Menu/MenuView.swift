@@ -35,32 +35,42 @@ struct MenuView: View {
                                 .foregroundColor(.red)
                             Text("Missions inactive: \(viewStore.numberMission - viewStore.numberMissionActive)")
                         }
+                        
+                        SearchField(placeholder: "NASA, ESA, SpaceX...", query: viewStore.binding(get: \.missionSearchQuery, send: MenuAction.missionQueryChanged), completionResult: viewStore.missionSearchCompletion) { query in
+                            viewStore.send(.loadNumberMission(query))
+                        } completionAction: { completion in
+                            viewStore.send(.loadNumberMission(completion))
+                        } content: {
+                            Text("Number mission: \(viewStore.numberMissionForCompany)")
+                        }
+
+                        
                     }
                     
                     CardView(title: "Cost") {
                         Text("Highest average cost: \(viewStore.highestAvgCost.name) | \(viewStore.highestAvgCost.cost, specifier: "%.2f") M$")
                         Text("Total cost: \(viewStore.totalCost, specifier: "%.2f") M$")
                         
-                        SearchField(placeholder: "NASA, ESA, SpaceX", query: viewStore.binding(get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged), completionResult: viewStore.companyCompletion) { query in
+                        SearchField(placeholder: "NASA, ESA, SpaceX...", query: viewStore.binding(get: \.companyCostQuery, send: MenuAction.companyCostQueryChanged), completionResult: viewStore.companyCompletion) { query in
                             viewStore.send(.loadCompanyCost(query))
                         } completionAction: { completion in
                             viewStore.send(.loadCompanyCost(completion))
                         } content: {
-                            Text("Total cost \(viewStore.companyCost, specifier: "%.2f") M$")
+                            Text("Total cost: \(viewStore.companyCost, specifier: "%.2f") M$")
                         }
                     }
                     
                     Spacer()
                     
                 }
-                .padding(20)
-                
+        
                 CardView(title: "Test") {
                     Text("Test")
                 }
                 
                 Spacer()
             }
+            .padding(20)
             .navigationTitle("Dashboard")
             .onAppear {
                 viewStore.send(.onAppearGetHighestAvgCost)

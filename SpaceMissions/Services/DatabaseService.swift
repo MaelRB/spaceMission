@@ -212,5 +212,21 @@ final class DatabaseService {
         }
         .eraseToEffect()
     }
+    
+    func fetchNumberMissionForComapny(name: String) -> Effect<Int, Failure> {
+        return Future<Int, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for row in try self.db.prepare(SQLQuery.numberMissionForCompany(name).query) {
+                    guard let number = row[0] as? Int64 else { continue }
+                    promise(.success(Int(number)))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
 
 }
