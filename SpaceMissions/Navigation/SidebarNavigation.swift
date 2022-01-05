@@ -52,8 +52,19 @@ struct SidebarNavigation: View {
                         Label(NavigationItem.database.rawValue, systemImage: NavigationItem.database.symbol)
                     }
                 }
+                .listStyle(.sidebar)
                 .padding(.top, 10)
                 .navigationTitle("SpaceMissions")
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button {
+                            NSApp.sendAction(#selector(NSSplitViewController.toggleSidebar(_:)), to: nil, from: nil)
+                        } label: {
+                            Image(systemName: "sidebar.left")
+                                .font(.title2)
+                        }
+                    }
+                }
                 .sheet(isPresented: $showInfoView, onDismiss: nil) {
                     InfoView()
                 }

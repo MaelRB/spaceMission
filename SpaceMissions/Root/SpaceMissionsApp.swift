@@ -35,5 +35,8 @@ struct SpaceMissionsApp: App {
                 ErrorView(error: error!)
             }
         }
+        .commands {
+            SidebarCommands()
+        }
     }
 }
