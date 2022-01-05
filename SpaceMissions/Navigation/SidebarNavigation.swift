@@ -14,15 +14,15 @@ struct SidebarNavigation: View {
     
     @State private var selection: NavigationItem? = .menu
     
+    @State private var showInfoView = false
+    
     var body: some View {
         WithViewStore(self.store.stateless) { _ in
             NavigationView {
                 List {
                     NavigationLink(tag: NavigationItem.menu, selection: $selection) {
                         MenuView(store: store.scope(state: \.menuState, action: RootAction.menuAction))
-                            .toolbar {
-                                Text("Info")
-                            }
+                            .toolbarInfo(show: $showInfoView)
                     } label: {
                         Label("Menu", systemImage: NavigationItem.menu.symbol)
                     }
@@ -30,27 +30,21 @@ struct SidebarNavigation: View {
                     DisclosureGroup {
                         NavigationLink(tag: NavigationItem.company, selection: $selection) {
                             DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Company)
-                                .toolbar {
-                                    Text("Info")
-                                }
+                                .toolbarInfo(show: $showInfoView)
                         } label: {
                             Text(NavigationItem.company.rawValue)
                         }
                         
                         NavigationLink(tag: NavigationItem.launch, selection: $selection) {
                             DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Launch)
-                                .toolbar {
-                                    Text("Info")
-                                }
+                                .toolbarInfo(show: $showInfoView)
                         } label: {
                             Text(NavigationItem.launch.rawValue)
                         }
                         
                         NavigationLink(tag: NavigationItem.mission, selection: $selection) {
                             DatabaseView(store: store.scope(state: \.databaseState, action: RootAction.databaseAction), databaseTable: .Mission)
-                                .toolbar {
-                                    Text("Info")
-                                }
+                                .toolbarInfo(show: $showInfoView)
                         } label: {
                             Text(NavigationItem.mission.rawValue)
                         }
@@ -60,6 +54,9 @@ struct SidebarNavigation: View {
                 }
                 .padding(.top, 10)
                 .navigationTitle("SpaceMissions")
+                .sheet(isPresented: $showInfoView, onDismiss: nil) {
+                    InfoView()
+                }
                 
                 Text("Select a category")
                     .foregroundStyle(.secondary)
@@ -70,4 +67,5 @@ struct SidebarNavigation: View {
             .frame(minWidth: 800, idealWidth: 1000, minHeight: 400, idealHeight: 600, alignment: .center)
         }
     }
+
 }
