@@ -32,7 +32,7 @@ struct CardView<Content: View>: View {
         }
         .frame(minWidth: 175, idealWidth: 225, maxWidth: 250)
         .padding(15)
-        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).foregroundColor(.white).shadow(radius: 0.25))
+        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).foregroundColor(Color("cardBackground")).shadow(radius: 0.25))
     }
 }
 
