@@ -13,6 +13,8 @@ struct MenuState: Equatable {
     // Company
     var numberCompany: Int = 0
     var rateOfSuccess: Double = 0.0
+    var rateOfSuccessSearchCompletion: [String] = []
+    var rateOfSuccessSearchQuery = ""
     
     // Mission
     var numberMission: Int = 0
@@ -41,6 +43,11 @@ enum MenuAction: Equatable {
     // Company
     case companyLoaded(Result<[Company], DatabaseService.Failure>)
     case numberCompanyLoaded(Result<Int, DatabaseService.Failure>)
+    
+    case companyQueryChanged(String)
+    case companyCompletionResponse(Result<[String], Never>)
+    case loadRateOfSuccess(String)
+    case rateOfSuccessLoaded(Result<Double, DatabaseService.Failure>)
     
     // Mission
     case numberMissionActiveLoaded(Result<Int, DatabaseService.Failure>)
@@ -115,6 +122,45 @@ let menuReducer = Reducer<
             switch result {
                 case .success(let companyList):
                     state.companyList = companyList
+                case .failure(let error):
+                    print(error)
+            }
+            return .none
+            
+        case .companyQueryChanged(let query):
+            guard !state.companyList.map({ $0.companyName }).contains(query) else { return .none }
+            
+            return state.companyList.publisher
+                .map { $0.companyName }
+                .compactMap { name in MenuReducerHelper.match(name: name, query: query) }
+                .collect()
+                .map { array in MenuReducerHelper.keepFirst(4, in: array) }
+                .catchToEffect(MenuAction.companyCompletionResponse)
+            
+        case .companyCompletionResponse(let result):
+            switch result {
+                case .success(let completion):
+                    state.rateOfSuccessSearchCompletion = completion
+                case .failure(let error):
+                    state.rateOfSuccessSearchCompletion = []
+            }
+            return .none
+            
+        case .loadRateOfSuccess(let name):
+            state.rateOfSuccessSearchQuery = name
+            let index = state.companyList.firstIndex(of: Company(name: name))
+            guard let safeIndex = index else { return .none }
+            return environment.databaseService.fetchRateOfSuccess(for: state.companyList[safeIndex].companyName)
+                .subscribe(on: DispatchQueue.global(qos: .userInteractive))
+                .receive(on: DispatchQueue.main)
+                .catchToEffect()
+                .map(MenuAction.rateOfSuccessLoaded)
+            
+        case .rateOfSuccessLoaded(let result):
+            state.rateOfSuccessSearchCompletion.removeAll()
+            switch result {
+                case .success(let number):
+                    state.rateOfSuccess = number
                 case .failure(let error):
                     print(error)
             }
@@ -252,21 +298,4 @@ struct MenuReducerHelper {
         return Array(array.prefix(n))
     }
     
-}
-
-
-import Combine
-
-extension Publisher {
-    
-    public func catchToEffectOnMain<T>(
-        _ transform: @escaping (Result<Output, Failure>) -> T
-    ) -> Effect<T, Never> {
-        self
-            .subscribe(on: DispatchQueue.global(qos: .userInteractive))
-            .receive(on: DispatchQueue.main)
-            .map { transform(.success($0)) }
-            .catch { Just(transform(.failure($0))) }
-            .eraseToEffect()
-    }
 }

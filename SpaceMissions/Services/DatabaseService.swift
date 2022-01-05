@@ -125,18 +125,18 @@ final class DatabaseService {
         .eraseToEffect()
     }
     
-    func fetchRateOfSuccess() -> Effect<Double, Failure> {
+    func fetchRateOfSuccess(for name: String) -> Effect<Double, Failure> {
         return Future<Double, Failure> { [weak self] promise in
             guard let self = self else { return }
             do {
-                for row in try self.db.prepare(SQLQuery.rateOfSuccessCreateView.query) {
+                for row in try self.db.prepare(SQLQuery.rateOfSuccessCreateView(name).query) {
                     guard let number = row[0] as? Double else { continue }
                     promise(.success(number))
                 }
             }
             catch {
                 do {
-                    for row in try self.db.prepare(SQLQuery.rateOfSuccess.query) {
+                    for row in try self.db.prepare(SQLQuery.rateOfSuccess(name).query) {
                         guard let number = row[0] as? Double else { continue }
                         promise(.success(number))
                     }

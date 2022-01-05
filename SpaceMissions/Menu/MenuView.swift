@@ -17,7 +17,6 @@ struct MenuView: View {
             VStack(alignment: .leading, spacing: 20) {
                 HStack(alignment: .top, spacing: 20) {
                     CardView(title: "Mission") {
-                        Text("Number companies: \(viewStore.numberCompany)")
                         Text("Number missions: \(viewStore.numberMission)")
                         
                         HStack {
@@ -41,7 +40,7 @@ struct MenuView: View {
                         } completionAction: { completion in
                             viewStore.send(.loadNumberMission(completion))
                         } content: {
-                            Text("Number mission: \(viewStore.numberMissionForCompany)")
+                            Text("Number missions: \(viewStore.numberMissionForCompany)")
                         }
 
                         
@@ -66,6 +65,15 @@ struct MenuView: View {
         
                 CardView(title: "Company") {
                     Text("Number companies: \(viewStore.numberCompany)")
+                    
+                    SearchField(placeholder: "NASA, ESA, SpaceX...", query: viewStore.binding(get: \.rateOfSuccessSearchQuery, send: MenuAction.companyQueryChanged), completionResult: viewStore.rateOfSuccessSearchCompletion) { query in
+                        viewStore.send(.loadRateOfSuccess(query))
+                    } completionAction: { completion in
+                        viewStore.send(.loadRateOfSuccess(completion))
+                    } content: {
+                        Text("Rate of success: \(viewStore.rateOfSuccess, specifier: "%.2f") %")
+                    }
+
                 }
                 
                 Spacer()
