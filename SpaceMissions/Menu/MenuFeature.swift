@@ -160,7 +160,7 @@ let menuReducer = Reducer<
             state.rateOfSuccessSearchCompletion.removeAll()
             switch result {
                 case .success(let number):
-                    state.rateOfSuccess = number
+                    state.rateOfSuccess = number * 100
                 case .failure(let error):
                     print(error)
             }
