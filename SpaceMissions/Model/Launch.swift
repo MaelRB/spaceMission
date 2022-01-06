@@ -9,7 +9,7 @@ import Foundation
 
 struct Launch: Identifiable, Equatable {
     
-    let id: String
+    let id: Int
     var companyName: String
     var location: String
     var date: String
@@ -20,7 +20,7 @@ struct Launch: Identifiable, Equatable {
     }
     
     init(companyName: String, location: String, date: String, missionID: Int) {
-        self.id = companyName
+        self.id = missionID
         self.companyName = companyName
         self.location = location
         self.date = date

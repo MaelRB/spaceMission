@@ -293,5 +293,35 @@ final class DatabaseService {
         }
         .eraseToEffect()
     }
+    
+    func deleteLaunch(with id: Int) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.deleteLaunch(id).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
+    
+    func deleteMission(with id: Int) -> Effect<Bool, Failure> {
+        return Future<Bool, Failure> { [weak self] promise in
+            guard let self = self else { return }
+            do {
+                for _ in try self.db.prepare(SQLQuery.deleteMission(id).query) {
+                    promise(.success(true))
+                }
+            }
+            catch {
+                promise(.failure(Failure()))
+            }
+        }
+        .eraseToEffect()
+    }
 
 }

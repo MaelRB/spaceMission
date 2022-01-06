@@ -24,6 +24,8 @@ extension DatabaseService {
         case addLaunch(Launch)
         case addMission(Mission)
         case deleteCompany(String)
+        case deleteLaunch(Int)
+        case deleteMission(Int)
         
         // Company
         case numberCompany
@@ -61,6 +63,8 @@ extension DatabaseService {
                                                                     VALUES ('\(mission.missionID)', '\(mission.detail)', '\(mission.statusRocket)', '\(mission.cost)', '\(mission.statusMission)');
                                                                     """
                 case .deleteCompany(let name):              return  "DELETE FROM Company WHERE companyName = '\(name)';"
+                case .deleteLaunch(let missionID):          return  "DELETE FROM Launch WHERE missionID = '\(missionID)';"
+                case .deleteMission(let missionID):         return  "DELETE FROM Mission WHERE missionID = '\(missionID)';"
                 case .numberCompany:                        return  "SELECT COUNT(*) FROM Company"
                 case .numberMission:                        return  "SELECT COUNT(*) FROM Mission"
                 case .numberMissionForCompany(let name):    return  """

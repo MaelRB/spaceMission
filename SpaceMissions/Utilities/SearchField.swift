@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchField<Content: View>: View {
     
+    var title: String
     var placeholder: String
     @Binding var query: String
     var completionResult: [String]
@@ -17,7 +18,8 @@ struct SearchField<Content: View>: View {
     
     let content: Content
     
-    init(placeholder: String, query: Binding<String>, completionResult: [String], submitAction: @escaping (String) -> Void, completionAction: @escaping (String) -> Void, @ViewBuilder content: () -> Content) {
+    init(title: String, placeholder: String, query: Binding<String>, completionResult: [String], submitAction: @escaping (String) -> Void, completionAction: @escaping (String) -> Void, @ViewBuilder content: () -> Content) {
+        self.title = title
         self.placeholder = placeholder
         self._query = query
         self.completionResult = completionResult
@@ -28,8 +30,9 @@ struct SearchField<Content: View>: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
             TextField(placeholder, text: $query)
-                .font(.body.bold())
                 .textFieldStyle(.plain)
                 .disableAutocorrection(true)
                 .onSubmit {
@@ -49,6 +52,6 @@ struct SearchField<Content: View>: View {
                 content
             }
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, 12)
     }
 }

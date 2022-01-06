@@ -78,8 +78,8 @@ extension DatabaseView {
             Group {
                 switch self {
                     case .Company:  CompanyTableView(viewStore: store, companyTable: store.companyList)
-                    case .Launch:   LaunchTableView(launchTable: store.launchList)
-                    case .Mission:  MissionTableView(missionTable: store.missionList)
+                    case .Launch:   LaunchTableView(viewStore: store, launchTable: store.launchList)
+                    case .Mission:  MissionTableView(viewStore: store, missionTable: store.missionList)
                 }
             }
         }
@@ -88,14 +88,30 @@ extension DatabaseView {
 
 struct LaunchTableView: View {
     
+    let viewStore: ViewStore<DatabaseState, DatabaseAction>
     var launchTable: [Launch]
+    @State private var selection: Launch.ID?
     
     var body: some View {
-        Table(launchTable) {
+        Table(launchTable, selection: $selection) {
             TableColumn(Launch.columnsName[0], value: \.companyName)
             TableColumn(Launch.columnsName[1], value: \.location)
             TableColumn(Launch.columnsName[2], value: \.date)
             TableColumn(Launch.columnsName[3], value: \.mission)
+        }
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    withAnimation {
+                        guard let id = selection else { return }
+                        selection = nil
+                        viewStore.send(.deleteLaunch(id))
+                    }
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .disabled(selection == nil)
+            }
         }
     }
 }
@@ -129,15 +145,31 @@ struct CompanyTableView: View {
 
 struct MissionTableView: View {
     
+    let viewStore: ViewStore<DatabaseState, DatabaseAction>
     var missionTable: [Mission]
+    @State private var selection: Mission.ID?
     
     var body: some View {
-        Table(missionTable) {
+        Table(missionTable, selection: $selection) {
             TableColumn(Mission.columnsName[0], value: \.mission)
             TableColumn(Mission.columnsName[1], value: \.detail)
             TableColumn(Mission.columnsName[2], value: \.statusRocket)
             TableColumn(Mission.columnsName[3], value: \.statusMission)
             TableColumn(Mission.columnsName[4], value: \.cost)
+        }
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    withAnimation {
+                        guard let id = selection else { return }
+                        selection = nil
+                        viewStore.send(.deleteMission(id))
+                    }
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .disabled(selection == nil)
+            }
         }
     }
 }

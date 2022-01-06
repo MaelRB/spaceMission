@@ -36,6 +36,8 @@ enum DatabaseAction: Equatable {
     case addMissionResponse(Result<Bool, DatabaseService.Failure>)
     
     case deleteCompany(String)
+    case deleteLaunch(Int)
+    case deleteMission(Int)
     case deleteResponse(Result<Bool, DatabaseService.Failure>)
 }
 
@@ -81,8 +83,18 @@ let databaseReducer = Reducer<
             return environment.databaseService.deleteCompany(with: name)
                 .catchToEffectOnMain(DatabaseAction.deleteResponse)
         
-        case .deleteResponse(_):
+        case .deleteResponse(let result):
             return .none
+        
+        case .deleteLaunch(let id):
+            state.launchList.removeAll { $0.id == id }
+            return environment.databaseService.deleteLaunch(with: id)
+                .catchToEffectOnMain(DatabaseAction.deleteResponse)
+            
+        case .deleteMission(let id):
+            state.missionList.removeAll { $0.id == id }
+            return environment.databaseService.deleteMission(with: id)
+                .catchToEffectOnMain(DatabaseAction.deleteResponse)
             
         case .companyLoaded(let result):
             switch result {
